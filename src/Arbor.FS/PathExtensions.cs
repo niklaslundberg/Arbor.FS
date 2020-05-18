@@ -5,7 +5,7 @@ namespace Arbor.FS
 {
     public static class PathExtensions
     {
-        public static UPath FsPath(string value) => NormalizePath(value);
+        public static UPath FsPath(this string value) => NormalizePath(value);
 
         public static UPath NormalizePath(this UPath path) => NormalizePath(path.FullName);
 

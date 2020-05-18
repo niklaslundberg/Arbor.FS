@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using Xunit;
 using Zio;
 using Zio.FileSystems;
-using static Arbor.FS.PathExtensions;
 
 namespace Arbor.FS.Tests.Integration
 {
@@ -14,11 +14,13 @@ namespace Arbor.FS.Tests.Integration
         {
             IFileSystem fs = new PhysicalJunctionFs(new WindowsFs(new PhysicalFileSystem()));
 
-            var target = FsPath("C:/temp/sub1/sub2");
+            var target = "C:/temp/sub1/sub2".FsPath();
 
-            var junctionPoint = FsPath("C:/temp/virtualtest");
+            var junctionPointVirtualPath = "C:/temp/virtualtest".FsPath();
 
             fs.CreateDirectory(target);
+
+            var junctionPoint = new JunctionPoint(junctionPointVirtualPath, target);
 
             var entry = new DirectoryEntry(fs, target);
 
@@ -27,15 +29,28 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, target, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
 
-            var virtualFilePath = UPath.Combine(junctionPoint, "test.txt");
+            var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
             var virtualFile = fs.GetFileEntry(virtualFilePath);
             var physicalFile = fs.GetFileEntry(filePath);
 
             Assert.True(virtualFile.Exists);
             Assert.True(physicalFile.Exists);
+
+            bool junctionPointExists = fs.JunctionPointExists(junctionPointVirtualPath);
+
+            Assert.True(junctionPointExists);
+
+            fs.DeleteJunctionPoint(junctionPointVirtualPath);
+
+            bool existsAfter = fs.JunctionPointExists(junctionPointVirtualPath);
+
+            Assert.False(existsAfter);
+
+            await testFile.DisposeAsync();
+            fs.DeleteDirectory(target, isRecursive: true);
         }
 
         [Fact]
@@ -44,7 +59,9 @@ namespace Arbor.FS.Tests.Integration
             IFileSystem fs = new JunctionFs(new MemoryFileSystem());
 
             UPath target = "/test1";
-            UPath junctionPoint = "/virtual";
+            UPath junctionPointVirtualPath = "/virtual";
+
+            var junctionPoint = new JunctionPoint(junctionPointVirtualPath, target);
 
             fs.CreateDirectory(target);
 
@@ -55,15 +72,25 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, target, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
 
-            var virtualFilePath = UPath.Combine(junctionPoint, "test.txt");
+            var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
             var virtualFile = fs.GetFileEntry(virtualFilePath);
             var physicalFile = fs.GetFileEntry(filePath);
 
             Assert.True(virtualFile.Exists);
             Assert.True(physicalFile.Exists);
+
+            bool junctionPointExists = fs.JunctionPointExists(junctionPointVirtualPath);
+
+            Assert.True(junctionPointExists);
+
+            fs.DeleteJunctionPoint(junctionPointVirtualPath);
+
+            bool existsAfter  = fs.JunctionPointExists(junctionPointVirtualPath);
+
+            Assert.False(existsAfter);
         }
 
         [Fact]
@@ -72,7 +99,9 @@ namespace Arbor.FS.Tests.Integration
             IFileSystem fs = new JunctionFs(new MemoryFileSystem());
 
             UPath target = "/test1/sub1/sub2";
-            UPath junctionPoint = "/virtual";
+            UPath junctionPointVirtualPath = "/virtual";
+
+            var junctionPoint = new JunctionPoint(junctionPointVirtualPath, target);
 
             fs.CreateDirectory(target);
 
@@ -83,15 +112,19 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, target, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
 
-            var virtualFilePath = UPath.Combine(junctionPoint, "test.txt");
+            var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
             var virtualFile = fs.GetFileEntry(virtualFilePath);
             var physicalFile = fs.GetFileEntry(filePath);
 
             Assert.True(virtualFile.Exists);
             Assert.True(physicalFile.Exists);
+
+            bool junctionPointExists = fs.JunctionPointExists(virtualFilePath);
+
+            Assert.True(junctionPointExists);
         }
 
         [Fact]
