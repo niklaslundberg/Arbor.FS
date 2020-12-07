@@ -14,9 +14,9 @@ namespace Arbor.FS.Tests.Integration
         {
             IFileSystem fs = new PhysicalJunctionFs(new WindowsFs(new PhysicalFileSystem()));
 
-            var target = "C:/temp/sub1/sub2".FsPath();
+            var target = "C:/temp/sub1/sub2".AsNormalizePath();
 
-            var junctionPointVirtualPath = "C:/temp/virtualtest".FsPath();
+            var junctionPointVirtualPath = "C:/temp/virtualtest".AsNormalizePath();
 
             fs.CreateDirectory(target);
 
@@ -134,7 +134,7 @@ namespace Arbor.FS.Tests.Integration
 
             string windowsPath = original.WindowsPath();
 
-            var asUPath = windowsPath.NormalizePath();
+            var asUPath = windowsPath.AsNormalizePath();
 
             Assert.Equal(original, asUPath);
         }

@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Zio;
+using Zio.FileSystems;
 
 namespace Arbor.FS.Tests.Integration
 {

@@ -5,21 +5,20 @@ namespace Arbor.FS
 {
     public static class PathExtensions
     {
-        public static UPath FsPath(this string value) => NormalizePath(value);
 
-        public static UPath NormalizePath(this UPath path) => NormalizePath(path.FullName);
+        public static UPath NormalizePath(this UPath path) => AsNormalizePath(path.FullName);
 
-        public static UPath NormalizePath(this string path)
+        public static UPath AsNormalizePath(this string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(path));
             }
 
-            if (path.Length > 2 && path[index: 1] == ':')
+            if (path.Length > 2 && path[1] == ':')
             {
-                return new UPath("/mnt/" + path[index: 0] +
-                                 path.Substring(startIndex: 2).Replace(oldChar: '\\', UPath.DirectorySeparator));
+                return new UPath("/mnt/" + path[0] +
+                                 path.Substring(2).Replace('\\', UPath.DirectorySeparator));
             }
 
             return path;
@@ -31,14 +30,14 @@ namespace Arbor.FS
 
             if (path.FullName.Length > 5 && path.FullName.StartsWith("/mnt/"))
             {
-                returnPath = path.FullName[index: 5] + ":" + path.FullName.Substring(startIndex: 6);
+                returnPath = path.FullName[5] + ":" + path.FullName.Substring(6);
             }
             else
             {
                 returnPath = path.FullName;
             }
 
-            return returnPath.Replace(UPath.DirectorySeparator, newChar: '\\');
+            return returnPath.Replace(UPath.DirectorySeparator, '\\');
         }
     }
 }

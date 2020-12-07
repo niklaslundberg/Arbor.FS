@@ -42,6 +42,7 @@ namespace Arbor.FS
             throw new NotSupportedException(
                 $"Junction point is not supported in file system {fileSystem.GetType().Name}");
         }
+
         public static void DeleteJunctionPoint(this IFileSystem fileSystem,
             UPath virtualPath)
         {
