@@ -147,10 +147,10 @@ namespace Arbor.FS.Ntfs
 
             try
             {
-                Marshal.StructureToPtr(reparseDataBuffer, inBuffer, fDeleteOld: false);
+                Marshal.StructureToPtr(reparseDataBuffer, inBuffer, false);
 
                 bool result = DeviceIoControl(handle.DangerousGetHandle(), FSCTL_SET_REPARSE_POINT,
-                    inBuffer, targetDirBytes.Length + 20, IntPtr.Zero, nOutBufferSize: 0, out int _,
+                    inBuffer, targetDirBytes.Length + 20, IntPtr.Zero, 0, out int _,
                     IntPtr.Zero);
 
                 if (!result)
@@ -196,10 +196,10 @@ namespace Arbor.FS.Ntfs
 
             try
             {
-                Marshal.StructureToPtr(reparseDataBuffer, inBuffer, fDeleteOld: false);
+                Marshal.StructureToPtr(reparseDataBuffer, inBuffer, false);
 
                 bool result = DeviceIoControl(handle.DangerousGetHandle(), FSCTL_DELETE_REPARSE_POINT,
-                    inBuffer, nInBufferSize: 8, IntPtr.Zero, nOutBufferSize: 0, out int _, IntPtr.Zero);
+                    inBuffer, 8, IntPtr.Zero, 0, out int _, IntPtr.Zero);
 
                 if (!result)
                 {
@@ -277,7 +277,7 @@ namespace Arbor.FS.Ntfs
             try
             {
                 bool result = DeviceIoControl(handle.DangerousGetHandle(), FSCTL_GET_REPARSE_POINT,
-                    IntPtr.Zero, nInBufferSize: 0, outBuffer, outBufferSize, out int _, IntPtr.Zero);
+                    IntPtr.Zero, 0, outBuffer, outBufferSize, out int _, IntPtr.Zero);
 
                 if (!result)
                 {
@@ -291,7 +291,7 @@ namespace Arbor.FS.Ntfs
                     ThrowLastWin32Error("Unable to get information about junction point.");
                 }
 
-                object? ptrToStructure = Marshal.PtrToStructure(outBuffer, typeof(REPARSE_DATA_BUFFER));
+                var ptrToStructure = Marshal.PtrToStructure(outBuffer, typeof(REPARSE_DATA_BUFFER));
 
                 if (ptrToStructure is null)
                 {
@@ -326,7 +326,7 @@ namespace Arbor.FS.Ntfs
             var reparsePointHandle = new SafeFileHandle(CreateFile(reparsePoint, accessMode,
                 EFileShare.Read | EFileShare.Write | EFileShare.Delete,
                 IntPtr.Zero, ECreationDisposition.OpenExisting,
-                EFileAttributes.BackupSemantics | EFileAttributes.OpenReparsePoint, IntPtr.Zero), ownsHandle: true);
+                EFileAttributes.BackupSemantics | EFileAttributes.OpenReparsePoint, IntPtr.Zero), true);
 
             if (Marshal.GetLastWin32Error() != 0)
             {

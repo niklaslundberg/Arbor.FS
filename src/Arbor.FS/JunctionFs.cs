@@ -58,8 +58,8 @@ namespace Arbor.FS
 
         private bool IsPathJunction(UPath path, out UPath? resultPath)
         {
-            bool found = _map.Keys.FirstOrDefault(key => path.IsInDirectory(key, recursive: true)) is { } foundPath &&
-foundPath.FullName?.Length > 0;
+            bool found = _map.Keys.FirstOrDefault(key => path.IsInDirectory(key, true)) is { } foundPath &&
+                         foundPath.FullName?.Length > 0;
 
             if (found)
             {

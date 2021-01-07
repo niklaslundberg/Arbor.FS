@@ -28,6 +28,7 @@ namespace Arbor.FS
             bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
+            fileSystem.EnsureExists(path.GetDirectory()).EnsureExists();
             await using var stream = fileSystem.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write);
 
             await WriteAllTextAsync(stream, content, encoding, leaveOpen, cancellationToken);
@@ -54,10 +55,12 @@ namespace Arbor.FS
             bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
+            fileSystem.EnsureExists(path.GetDirectory()).EnsureExists();
             await using var stream = fileSystem.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write);
 
             await WriteAllLinesAsync(stream, lines, encoding, leaveOpen, cancellationToken);
         }
+
         public static async Task<string> ReadAllTextAsync(this Stream stream,
             Encoding? encoding = null,
             bool leaveOpen = false,
@@ -65,7 +68,7 @@ namespace Arbor.FS
         {
             using StreamReader reader = new(stream, encoding ?? Encoding.UTF8, leaveOpen: leaveOpen);
 
-           return await reader.ReadToEndAsync();
+            return await reader.ReadToEndAsync();
         }
 
         public static async Task<string> ReadAllTextAsync(this IFileSystem fileSystem,
@@ -97,8 +100,7 @@ namespace Arbor.FS
                 {
                     lines.Add(line);
                 }
-
-            } while (line != null);
+            } while (line != null && !cancellationToken.IsCancellationRequested);
 
             return lines;
         }
