@@ -13,15 +13,15 @@
       },
       "JetBrains.Annotations": {
         "type": "Direct",
-        "requested": "[2020.1.0, )",
-        "resolved": "2020.1.0",
-        "contentHash": "kD9D2ey3DGeLbfIzS8PkwLFkcF5vCOLk2rdjgfSxTfpoyovl7gAyoS6yq6T77zo9QgJGaVJ7PO/cSgLopnKlzg=="
+        "requested": "[2020.3.0, )",
+        "resolved": "2020.3.0",
+        "contentHash": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA=="
       },
       "Zio": {
         "type": "Direct",
-        "requested": "[0.9.1, )",
-        "resolved": "0.9.1",
-        "contentHash": "Avm3Ka79kkgfAOpt/zqIBgJO6Xh0xuI5xar5A+rSSTToqBApf4SiwlqWG3inkn9VsbxaTmoTWKjCnsnEY+AO+g=="
+        "requested": "[0.11.0, )",
+        "resolved": "0.11.0",
+        "contentHash": "eNHy6n/UCuQKtqCVw2XIw7L9g1/5vEFuMJ8aLM6tXLxh+vAFajwW1+oFAL65t31YNWro0uLDCez5mGsamC73QA=="
       },
       "System.Configuration.ConfigurationManager": {
         "type": "Transitive",
@@ -49,15 +49,15 @@
       },
       "JetBrains.Annotations": {
         "type": "Direct",
-        "requested": "[2020.1.0, )",
-        "resolved": "2020.1.0",
-        "contentHash": "kD9D2ey3DGeLbfIzS8PkwLFkcF5vCOLk2rdjgfSxTfpoyovl7gAyoS6yq6T77zo9QgJGaVJ7PO/cSgLopnKlzg=="
+        "requested": "[2020.3.0, )",
+        "resolved": "2020.3.0",
+        "contentHash": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA=="
       },
       "Zio": {
         "type": "Direct",
-        "requested": "[0.9.1, )",
-        "resolved": "0.9.1",
-        "contentHash": "Avm3Ka79kkgfAOpt/zqIBgJO6Xh0xuI5xar5A+rSSTToqBApf4SiwlqWG3inkn9VsbxaTmoTWKjCnsnEY+AO+g=="
+        "requested": "[0.11.0, )",
+        "resolved": "0.11.0",
+        "contentHash": "eNHy6n/UCuQKtqCVw2XIw7L9g1/5vEFuMJ8aLM6tXLxh+vAFajwW1+oFAL65t31YNWro0uLDCez5mGsamC73QA=="
       },
       "System.Configuration.ConfigurationManager": {
         "type": "Transitive",
