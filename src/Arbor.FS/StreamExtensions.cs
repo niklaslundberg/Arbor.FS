@@ -24,25 +24,23 @@ namespace Arbor.FS
         public static async Task WriteAllTextAsync(this FileEntry fileEntry,
             string content,
             Encoding? encoding = null,
-            bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
             fileEntry.Directory.EnsureExists();
             await using var stream = fileEntry.Open(FileMode.OpenOrCreate, FileAccess.Write);
 
-            await WriteAllTextAsync(stream, content, encoding, leaveOpen, cancellationToken);
+            await WriteAllTextAsync(stream, content, encoding, true, cancellationToken);
         }
         public static async Task WriteAllTextAsync(this IFileSystem fileSystem,
             UPath path,
             string content,
             Encoding? encoding = null,
-            bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
             fileSystem.EnsureExists(path.GetDirectory()).EnsureExists();
             await using var stream = fileSystem.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write);
 
-            await WriteAllTextAsync(stream, content, encoding, leaveOpen, cancellationToken);
+            await WriteAllTextAsync(stream, content, encoding, true, cancellationToken);
         }
 
         public static async Task WriteAllLinesAsync(this Stream stream,
@@ -63,13 +61,12 @@ namespace Arbor.FS
             UPath path,
             IReadOnlyCollection<string> lines,
             Encoding? encoding = null,
-            bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
             fileSystem.EnsureExists(path.GetDirectory()).EnsureExists();
             await using var stream = fileSystem.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Write);
 
-            await WriteAllLinesAsync(stream, lines, encoding, leaveOpen, cancellationToken);
+            await WriteAllLinesAsync(stream, lines, encoding, true, cancellationToken);
         }
 
         public static async Task<string> ReadAllTextAsync(this Stream stream,
@@ -85,12 +82,11 @@ namespace Arbor.FS
         public static async Task<string> ReadAllTextAsync(this IFileSystem fileSystem,
             UPath path,
             Encoding? encoding = null,
-            bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
             await using var stream = fileSystem.OpenFile(path, FileMode.Open, FileAccess.Read);
 
-            return await ReadAllTextAsync(stream, encoding, leaveOpen, cancellationToken);
+            return await ReadAllTextAsync(stream, encoding, true, cancellationToken);
         }
 
         public static async Task<IReadOnlyCollection<string>> ReadAllLinesAsync(this Stream stream,
@@ -119,12 +115,11 @@ namespace Arbor.FS
         public static async Task<IReadOnlyCollection<string>> ReadAllLinesAsync(this IFileSystem fileSystem,
             UPath path,
             Encoding? encoding = null,
-            bool leaveOpen = false,
             CancellationToken cancellationToken = default)
         {
             await using var stream = fileSystem.OpenFile(path, FileMode.OpenOrCreate, FileAccess.Read);
 
-            return await ReadAllLinesAsync(stream, encoding, leaveOpen, cancellationToken);
+            return await ReadAllLinesAsync(stream, encoding, true, cancellationToken);
         }
     }
 }
