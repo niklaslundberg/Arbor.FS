@@ -21,6 +21,17 @@ namespace Arbor.FS
             await writer.WriteAsync(content.AsMemory(), cancellationToken);
         }
 
+        public static async Task WriteAllTextAsync(this FileEntry fileEntry,
+            string content,
+            Encoding? encoding = null,
+            bool leaveOpen = false,
+            CancellationToken cancellationToken = default)
+        {
+            fileEntry.Directory.EnsureExists();
+            await using var stream = fileEntry.Open(FileMode.OpenOrCreate, FileAccess.Write);
+
+            await WriteAllTextAsync(stream, content, encoding, leaveOpen, cancellationToken);
+        }
         public static async Task WriteAllTextAsync(this IFileSystem fileSystem,
             UPath path,
             string content,
