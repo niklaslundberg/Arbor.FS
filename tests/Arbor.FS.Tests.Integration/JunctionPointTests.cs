@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Schema;
 using Xunit;
 using Zio;
 using Zio.FileSystems;
@@ -14,9 +13,9 @@ namespace Arbor.FS.Tests.Integration
         {
             IFileSystem fs = new PhysicalJunctionFs(new WindowsFs(new PhysicalFileSystem()));
 
-            var target = "C:/temp/sub1/sub2".AsNormalizePath();
+            var target = "C:/temp/sub1/sub2".ParseAsPath();
 
-            var junctionPointVirtualPath = "C:/temp/virtualtest".AsNormalizePath();
+            var junctionPointVirtualPath = "C:/temp/virtualtest".ParseAsPath();
 
             fs.CreateDirectory(target);
 
@@ -29,7 +28,7 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, true);
 
             var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
@@ -50,7 +49,7 @@ namespace Arbor.FS.Tests.Integration
             Assert.False(existsAfter);
 
             await testFile.DisposeAsync();
-            fs.DeleteDirectory(target, isRecursive: true);
+            fs.DeleteDirectory(target, true);
         }
 
         [Fact]
@@ -72,7 +71,7 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, true);
 
             var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
@@ -88,7 +87,7 @@ namespace Arbor.FS.Tests.Integration
 
             fs.DeleteJunctionPoint(junctionPointVirtualPath);
 
-            bool existsAfter  = fs.JunctionPointExists(junctionPointVirtualPath);
+            bool existsAfter = fs.JunctionPointExists(junctionPointVirtualPath);
 
             Assert.False(existsAfter);
         }
@@ -112,7 +111,7 @@ namespace Arbor.FS.Tests.Integration
 
             await testFile.WriteAsync(Encoding.UTF8.GetBytes("123"));
 
-            fs.CreateJunctionPoint(junctionPoint, overwrite: true);
+            fs.CreateJunctionPoint(junctionPoint, true);
 
             var virtualFilePath = UPath.Combine(junctionPointVirtualPath, "test.txt");
 
@@ -134,7 +133,7 @@ namespace Arbor.FS.Tests.Integration
 
             string windowsPath = original.WindowsPath();
 
-            var asUPath = windowsPath.AsNormalizePath();
+            var asUPath = windowsPath.ParseAsPath();
 
             Assert.Equal(original, asUPath);
         }

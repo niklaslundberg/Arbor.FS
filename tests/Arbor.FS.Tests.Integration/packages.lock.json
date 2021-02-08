@@ -2,6 +2,15 @@
   "version": 1,
   "dependencies": {
     ".NETCoreApp,Version=v3.1": {
+      "FluentAssertions": {
+        "type": "Direct",
+        "requested": "[5.10.3, )",
+        "resolved": "5.10.3",
+        "contentHash": "gVPEVp1hLVqcv+7Q2wiDf7kqCNn7+bQcQ0jbJ2mcRT6CeRoZl1tNkqvzSIhvekyldDptk77j1b03MXTTRIqqpg==",
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.4.0"
+        }
+      },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
         "requested": "[16.8.3, )",
@@ -29,18 +38,10 @@
         "resolved": "2.4.3",
         "contentHash": "kZZSmOmKA8OBlAJaquPXnJJLM9RwQ27H7BMVqfMLUcTi9xHinWGJiWksa3D4NEtz0wZ/nxd2mogObvBgJKCRhQ=="
       },
-      "FluentAssertions": {
-        "type": "Transitive",
-        "resolved": "5.10.3",
-        "contentHash": "gVPEVp1hLVqcv+7Q2wiDf7kqCNn7+bQcQ0jbJ2mcRT6CeRoZl1tNkqvzSIhvekyldDptk77j1b03MXTTRIqqpg==",
-        "dependencies": {
-          "System.Configuration.ConfigurationManager": "4.4.0"
-        }
-      },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2020.1.0",
-        "contentHash": "kD9D2ey3DGeLbfIzS8PkwLFkcF5vCOLk2rdjgfSxTfpoyovl7gAyoS6yq6T77zo9QgJGaVJ7PO/cSgLopnKlzg=="
+        "resolved": "2020.3.0",
+        "contentHash": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA=="
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
@@ -1117,15 +1118,14 @@
       },
       "Zio": {
         "type": "Transitive",
-        "resolved": "0.9.1",
-        "contentHash": "Avm3Ka79kkgfAOpt/zqIBgJO6Xh0xuI5xar5A+rSSTToqBApf4SiwlqWG3inkn9VsbxaTmoTWKjCnsnEY+AO+g=="
+        "resolved": "0.11.0",
+        "contentHash": "eNHy6n/UCuQKtqCVw2XIw7L9g1/5vEFuMJ8aLM6tXLxh+vAFajwW1+oFAL65t31YNWro0uLDCez5mGsamC73QA=="
       },
-      "arbor.fs": {
+      "Arbor.FileSystem": {
         "type": "Project",
         "dependencies": {
-          "FluentAssertions": "5.10.3",
-          "JetBrains.Annotations": "2020.1.0",
-          "zio": "0.9.1"
+          "JetBrains.Annotations": "2020.3.0",
+          "zio": "0.11.0"
         }
       }
     }

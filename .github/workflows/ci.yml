@@ -5,14 +5,20 @@ on: [push]
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
     - name: install-tools
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool
-        dotnet tool install --global Arbor.Build.Bootstrapper
+        dotnet tool install --global Arbor.Build.Bootstrapper --version 5.0.0-build.1610097101
     - name: build
       env:
         Arbor.Build.NuGet.PackageUpload.Server.ApiKey: ${{ secrets.myget }}

@@ -27,7 +27,7 @@ namespace Arbor.FS.Tests.Integration
         {
             using var fs = new MemoryFileSystem();
 
-            var writeContent = new List<string>{"test1", "test2"};
+            var writeContent = new List<string> {"test1", "test2"};
 
             await fs.WriteAllLinesAsync("/a", writeContent);
 
